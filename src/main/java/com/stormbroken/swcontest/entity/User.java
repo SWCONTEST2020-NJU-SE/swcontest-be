@@ -10,8 +10,7 @@ public class User {
     private String password;
     private long createtime;
     private String content;
-    private String friendIDs;
-    private String ban;
+    private String url;
     private String likes;
     private String history;
 }
