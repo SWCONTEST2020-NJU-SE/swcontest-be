@@ -9,5 +9,4 @@ class SwcontestApplicationTests {
     @Test
     void contextLoads() {
     }
-
 }

@@ -1,6 +1,6 @@
 package com.stormbroken.swcontest.constant;
 
-public class ResponseCode {
+public class ResponseCode {//常量
     public static final int RESULT_IS_NULL = 3;//是否返回了一个null的类
 
     public static final int OK = 0;

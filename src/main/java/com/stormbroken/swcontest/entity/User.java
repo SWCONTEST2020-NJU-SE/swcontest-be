@@ -13,4 +13,6 @@ public class User {
     private String url;
     private String likes;
     private String history;
+    private  int tasteId;
+
 }

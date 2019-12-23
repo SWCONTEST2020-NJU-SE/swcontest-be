@@ -30,7 +30,7 @@ public class SimpleResponse {
         this.data = null;
     }
 
-    public SimpleResponse(int code, Object data) {
+    public SimpleResponse(int code, Object data) {//code是否有问题，data传给前端的数据
         this.code = code;
         this.data = data;
     }
@@ -41,7 +41,7 @@ public class SimpleResponse {
      * @param data
      * @param exception
      */
-    public SimpleResponse(int code, Object data, String exception){
+    public SimpleResponse(int code, Object data, String exception){//string 加说明
         this.code = code;
         this.data = data;
         this.exception = exception;//其他的异常部分

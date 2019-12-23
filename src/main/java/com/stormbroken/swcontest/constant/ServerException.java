@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ServerException extends RuntimeException{
+public class ServerException extends RuntimeException{//？
 
     private int code;
     private String msg;
