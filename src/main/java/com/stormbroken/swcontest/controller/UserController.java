@@ -30,12 +30,10 @@ import java.util.UUID;
 @RequestMapping("/user")//域名
 public class UserController {
 
-
     ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired//自动装配
     UserDao userDao;//持久层
-
     @Autowired
     LogDao logDao;
     @Autowired
@@ -137,7 +135,7 @@ public class UserController {
         String token=tasteForm.getToken();
         User user=SwcontestApplication.findAccountByToken(token);
         int uid=user.getId();
-            userTaste  userTaste=user.getTaste();
+            userTaste userTaste=user.getTaste();
         boolean Create=tasteForm.isValid();//创建
         int type=tasteForm.getType();
         String addition=tasteForm.getAddition();
@@ -170,8 +168,6 @@ public class UserController {
         }catch (Exception e){
             return new SimpleResponse(1,e);
         }
-
-
 
     }
 
