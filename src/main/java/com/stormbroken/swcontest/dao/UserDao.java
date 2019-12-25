@@ -4,8 +4,6 @@ import com.stormbroken.swcontest.entity.Edit;
 import com.stormbroken.swcontest.entity.User;
 import com.stormbroken.swcontest.form.RegisterForm;
 import com.stormbroken.swcontest.vo.ChangePasswordVO;
-import com.stormbroken.swcontest.vo.TasteVO;
-import com.stormbroken.swcontest.vo.UpdateVO;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -25,8 +23,5 @@ public interface UserDao {
     void updateUser(Edit edit);
     @Update("update user set password=#{password} where name=#{name}")
     void changePassword(ChangePasswordVO changePasswordVO);   //修改密码
-    @Update("update user set name=#{name} where name=#{name}")
-    void changefeature(UpdateVO updateVO);    //更新信息
-    @Update("update user set taste=#{taste} where name={name} ")
-    void chageTaste(TasteVO tasteVO);
+
 }

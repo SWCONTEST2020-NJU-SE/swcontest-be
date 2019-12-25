@@ -3,7 +3,7 @@ package com.stormbroken.swcontest.form;
 import lombok.Data;
 
 @Data
-public class SubstituteForm {
+public class DeleteForm {
     private String token;
-    private int number;
+    private int id;
 }

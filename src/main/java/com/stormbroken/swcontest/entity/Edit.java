@@ -1,6 +1,6 @@
 package com.stormbroken.swcontest.entity;
 
-import com.stormbroken.swcontest.form.EditForm;
+import com.stormbroken.swcontest.form.UserEditForm;
 import lombok.Data;
 
 @Data
@@ -10,11 +10,11 @@ public class Edit {
     private String name;
     private String content;
     private String url;
-    public Edit(String username, EditForm editForm){
+    public Edit(String username, UserEditForm userEditForm){
         this.username = username;
-        this.token = editForm.getToken();
-        this.name = editForm.getName();
-        this.content = editForm.getContent();
-        this.url = editForm.getUrl();
+        this.token = userEditForm.getToken();
+        this.name = userEditForm.getName();
+        this.content = userEditForm.getContent();
+        this.url = userEditForm.getUrl();
     }
 }

@@ -6,10 +6,12 @@ import com.stormbroken.swcontest.SwcontestApplication;
 import com.stormbroken.swcontest.constant.ResponseCode;
 import com.stormbroken.swcontest.constant.SimpleResponse;
 import com.stormbroken.swcontest.dao.LogDao;
+import com.stormbroken.swcontest.dao.TasteDao;
 import com.stormbroken.swcontest.dao.UserDao;
 import com.stormbroken.swcontest.entity.Edit;
 import com.stormbroken.swcontest.entity.Log;
 import com.stormbroken.swcontest.entity.User;
+import com.stormbroken.swcontest.entity.userTaste;
 import com.stormbroken.swcontest.form.*;
 import com.stormbroken.swcontest.utils.MD5Encryption;
 import com.stormbroken.swcontest.vo.ChangePasswordVO;
@@ -36,6 +38,8 @@ public class UserController {
 
     @Autowired
     LogDao logDao;
+    @Autowired
+    TasteDao tasteDao;
 
 
     @RequestMapping("/register")
@@ -68,7 +72,7 @@ public class UserController {
             String string= UUID.randomUUID().toString().replace("-","");
 
             SwcontestApplication.tokenMap.put(string,tempUser);
-            UserVO userVO = new UserVO(tempUser.getId(),tempUser.getName(),string);
+            UserVO userVO = new UserVO(tempUser.getId(),tempUser.getName(),string,tempUser.getTaste());
             return new SimpleResponse(0,userVO);
         }
         return new SimpleResponse(1);
@@ -84,20 +88,20 @@ public class UserController {
         }
     }
     @RequestMapping("/edit")
-    public SimpleResponse edit(@RequestBody EditForm editForm){//前端传过来的文件
+    public SimpleResponse edit(@RequestBody UserEditForm userEditForm){//前端传过来的文件
         try{
             System.out.println("一个用户进行修改用户信息操作");
-            User user = SwcontestApplication.findAccountByToken(editForm.getToken());
+            User user = SwcontestApplication.findAccountByToken(userEditForm.getToken());
             if(user == null){
                 System.out.println("查无此人");
-                return new SimpleResponse(1,editForm);
+                return new SimpleResponse(1, userEditForm);
             }
             String username = user.getName();
-            if(userDao.findByName(editForm.getName())==null||editForm.getName().equals(username)){
-                Edit edit = new Edit(username,editForm);
+            if(userDao.findByName(userEditForm.getName())==null|| userEditForm.getName().equals(username)){
+                Edit edit = new Edit(username, userEditForm);
                 userDao.updateUser(edit);
                 System.out.println("成功修改账户信息"+edit);
-                this.writeLog(user.getId(),editForm,new SimpleResponse(0));
+                this.writeLog(user.getId(), userEditForm,new SimpleResponse(0));
                 return new SimpleResponse(0);
             }else{
                 System.out.println("用户名被占用");
@@ -126,11 +130,33 @@ public class UserController {
     }
     @RequestMapping("/taste")
     public SimpleResponse taste(@RequestBody TasteForm tasteForm ){
+        try {
+
+
         System.out.println("修改一个用户的口味");
         String token=tasteForm.getToken();
-        boolean Create=tasteForm.isValid();
-        return new SimpleResponse(0);
+        User user=SwcontestApplication.findAccountByToken(token);
+        int uid=user.getId();
+            userTaste  userTaste=user.getTaste();
+        boolean Create=tasteForm.isValid();//创建
+        int type=tasteForm.getType();
+        String addition=tasteForm.getAddition();
 
+
+        if(Create){
+            tasteDao.add(tasteVO);
+            user.getTaste().add(tasteForm);
+        }else if(!Create){
+
+            tasteDao.delete(tasteid,uid);
+           user.getTaste().remove(tasteid-1);
+        }else {
+            return new SimpleResponse(1,tasteForm);
+        }
+        return new SimpleResponse(0);}
+        catch (Exception e) {
+            return new SimpleResponse(1,tasteForm);
+        }
     }
     @RequestMapping("/logout")
     public  SimpleResponse logout(@RequestBody TokenForm  tokenForm){
